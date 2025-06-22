@@ -14,6 +14,11 @@ logenv/
 !.idea/vcs.xml
 !.idea/inspectionProfiles
 
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+dataset/
+data/
 
 # OS
 .DS_Store
