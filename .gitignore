@@ -1,0 +1,22 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environments
+env/
+venv/
+logenv/
+
+# PyCharm
+.idea/
+!.idea/modules.xml
+!.idea/vcs.xml
+!.idea/inspectionProfiles
+
+
+# OS
+.DS_Store
+Thumbs.db
+
+
