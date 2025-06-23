@@ -26,3 +26,4 @@ Thumbs.db
 
 
 models/controlled_bert_model.pth
+.env
