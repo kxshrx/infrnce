@@ -18,7 +18,7 @@ logenv/
 .ipynb_checkpoints/
 
 dataset/
-data/
+results/
 
 # OS
 .DS_Store
