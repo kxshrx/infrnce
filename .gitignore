@@ -1,12 +1,36 @@
+<<<<<<< HEAD
+=======
+# LOG CLASSIFICATION PROJECT - GITIGNORE
+# 
+# This project processes large OpenStack log datasets and trains ML models.
+# To keep repository size manageable (<50MB), we exclude:
+# - Large log files (19MB+ each)
+# - Trained models (255MB+ each) 
+# - Result CSVs (38MB+ each)
+# - Binary embeddings (201MB+ each)
+#
+# What we DO track:
+# - Source code (.py files)
+# - Jupyter notebooks (.ipynb)
+# - Small sample datasets (<1MB)
+# - Documentation and configuration
+# - Project structure and requirements
+
+>>>>>>> frontend
 # Python bytecode
 __pycache__/
 *.py[cod]
 *.so
+<<<<<<< HEAD
+=======
+*.pyo
+>>>>>>> frontend
 
 # Virtual environments
 env/
 venv/
 logenv/
+<<<<<<< HEAD
 
 # PyCharm
 .idea/
@@ -30,3 +54,132 @@ models/controlled_bert_model.pth
 
 
 project_details.txt
+=======
+.venv/
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+config.json
+
+# Large datasets and results (keep sample data only)
+log_classification_system/data/*.log
+log_classification_system/results/*.csv
+log_classification_system/results/*.txt
+log_classification_system/results/*.png
+log_classification_system/results/*.npy
+
+# Trained models (too large for git)
+log_classification_system/models/*.pth
+log_classification_system/models/*.pkl
+log_classification_system/models/*.joblib
+log_classification_system/models/*.bin
+
+# Large log files (any size, any location)
+*.log
+
+# Large CSV files and results (except small samples)
+**/results/*.csv
+**/data/*.csv
+# Allow small sample/demo datasets
+!**/data/dataset_sampling.csv
+!**/data/*_sample.csv
+!**/data/*_demo.csv
+
+# Large binary files
+*.npy
+*.npz
+*.h5
+*.hdf5
+
+# Model files anywhere in project
+**/*.pth
+**/*.pkl
+**/*.joblib
+**/*.bin
+**/*.model
+**/*.weights
+
+# Large image/plot files
+*.png
+*.jpg
+*.jpeg
+*.pdf
+# Allow small documentation images
+!docs/**/*.png
+!docs/**/*.jpg
+
+# Temporary files and outputs
+*.tmp
+*.temp
+temp/
+tmp/
+prod/
+
+# Large datasets and intermediate files
+**/embeddings/
+**/checkpoints/
+**/cache/
+**/.cache/
+
+# Jupyter notebook outputs and large files
+*.ipynb_checkpoints/
+**/outputs/
+**/logs/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Backup and archive files
+*.bak
+*.backup
+*.old
+*.orig
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Project specific
+project_details.txt
+documentation_private.md
+
+# REPOSITORY SIZE MANAGEMENT
+# This project deals with large datasets, models, and result files
+# Only keep essential files for development and small samples for demos
+
+# Python package files
+dist/
+build/
+*.egg-info/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# Testing
+.pytest_cache/
+.tox/log_classification_system/models/*.pth
+>>>>>>> frontend

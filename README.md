@@ -9,6 +9,10 @@ This project implements a hybrid approach to log classification that combines th
 ## Features
 
 - **Three-Stage Classification Pipeline**:
+<<<<<<< HEAD
+=======
+
+>>>>>>> frontend
   - Fast regex pattern matching for common log formats
   - BERT-based deep learning for logs with sufficient examples
   - LLM-based fallback for rare or complex log patterns
@@ -21,6 +25,7 @@ This project implements a hybrid approach to log classification that combines th
 
 ## Project Structure
 
+<<<<<<< HEAD
 ```
 log-classification/
 ├── data/                # Log datasets and processed results
@@ -37,6 +42,33 @@ log-classification/
 ```
 
 ## Requirements
+=======
+````
+log-classification/
+├── .env                           # Environment variables (API keys, etc.)
+├── .gitignore                     # Git ignore file
+├── logenv/                        # Python virtual environment
+├── README.md                      # This file
+└── log_classification_system/     # MAIN PROJECT DIRECTORY
+    ├── requirements.txt           # Project dependencies
+    ├── core/                      # Core logic and processing modules
+    │   ├── main.py                # Main execution script
+    │   └── data_processing/       # Data processing modules
+    │       └── data_sampling.py   # Dataset sampling and demo creation
+    ├── notebooks/                 # Jupyter notebooks for each pipeline stage
+    │   ├── bert-v2.ipynb          # BERT model implementation
+    │   ├── llm_v1.ipynb           # LLM classification (initial)
+    │   ├── llm_v2.ipynb           # LLM classification (enhanced)
+    │   ├── regex.ipynb            # Regex classification
+    │   └── unified_results.ipynb  # Results integration
+    ├── data/                      # Log datasets and processed results
+    ├── models/                    # Saved model files
+    ├── results/                   # Pipeline output and analysis
+    └── docs/                      # Documentation and project details
+        ├── documentation.md       # Technical documentation
+        └── project_details.txt    # Project specifications
+```## Requirements
+>>>>>>> frontend
 
 - Python 3.8+
 - 8GB RAM (16GB recommended)
@@ -46,12 +78,23 @@ log-classification/
 ## Installation
 
 1. **Clone the repository**:
+<<<<<<< HEAD
    ```bash
    git clone https://github.com/yourusername/log-classification.git
    cd log-classification
    ```
 
 2. **Set up environment**:
+=======
+
+   ```bash
+   git clone https://github.com/yourusername/log-classification.git
+   cd log-classification
+````
+
+2. **Set up environment**:
+
+>>>>>>> frontend
    ```bash
    python -m venv logenv
    source logenv/bin/activate  # On macOS/Linux
@@ -60,7 +103,13 @@ log-classification/
    ```
 
 3. **Install dependencies**:
+<<<<<<< HEAD
    ```bash
+=======
+
+   ```bash
+   cd log_classification_system
+>>>>>>> frontend
    pip install -r requirements.txt
    ```
 
@@ -77,22 +126,39 @@ log-classification/
 Run the complete classification pipeline:
 
 ```bash
+<<<<<<< HEAD
 python main.py --input data/your_logs.log --output data/classified_logs.csv
+=======
+cd log_classification_system
+python core/main.py --input data/your_logs.log --output results/classified_logs.csv
+>>>>>>> frontend
 ```
 
 ### Individual Components
 
 1. **Preprocess logs**:
+<<<<<<< HEAD
+=======
+
+>>>>>>> frontend
    ```bash
    python -m scripts.prepare_data --input data/raw_logs.log --output data/cleaned_logs.csv
    ```
 
 2. **Run regex classification**:
+<<<<<<< HEAD
+=======
+
+>>>>>>> frontend
    ```bash
    python -m scripts.regex_classify --input data/cleaned_logs.csv --output data/regex_results.csv
    ```
 
 3. **Run BERT classification**:
+<<<<<<< HEAD
+=======
+
+>>>>>>> frontend
    ```bash
    python -m scripts.bert_classify --input data/regex_results.csv --output data/bert_results.csv
    ```
