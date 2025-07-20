@@ -1,96 +1,112 @@
-# Frontend - Hybrid Intelligent Log Classification System
+# Infrnce - Intelligent Log Classification Engine
 
-## Overview
-
-This is the interactive demo UI for the Hybrid Intelligent Log Classification System. It showcases the three-stage pipeline (Regex → BERT → LLM) with a stunning, professional interface built with Next.js and shadcn/ui.
+A professional Next.js website showcasing an intelligent log classification engine for infrastructure teams. Built with modern web technologies and designed with professional minimalism and "Clarity as a Feature" philosophy.
 
 ## Features
 
-- **Performance Dashboard**: Live metrics showing 92.7% Coverage, 94.3% Accuracy, and ~260 logs/sec processing speed
-- **Interactive Classification Hub**: Multiple ways to input logs for classification
-- **Guided Tour**: Pre-built examples that demonstrate each stage of the pipeline
-- **Pipeline Journey Visualizer**: Real-time visualization of which stage processed the log
-- **Responsive Design**: Beautiful UI that works on desktop and mobile
+- **Intelligent Homepage**: Comprehensive landing page with hero section, live demo, value propositions, and architecture overview
+- **Live Classification Engine**: Interactive log classification with support for manual input, dataset samples, and AI-generated logs
+- **Performance Dashboard**: Detailed analytics showing pipeline performance, cost metrics, and stage breakdowns
+- **Professional Design**: Clean, minimalist interface using sophisticated teal accent colors and elegant typography
+- **Consistent Background Pattern**: Diagonal line pattern applied across all pages for visual coherence
+- **Responsive Layout**: Fully responsive design optimized for all devices
+- **Accessibility**: Built with accessibility standards and keyboard navigation support
 
 ## Tech Stack
 
-- **Framework**: Next.js 15 (App Router)
-- **Language**: JavaScript (JSX)
-- **UI Components**: shadcn/ui
-- **Styling**: Tailwind CSS
+- **Framework**: Next.js 15 with App Router
+- **Language**: JavaScript (ES6+)
+- **Styling**: Tailwind CSS v4 with custom teal theme
+- **UI Components**: shadcn/ui with Radix UI primitives
 - **Icons**: Lucide React
+- **Backend Integration**: FastAPI endpoints at http://127.0.0.1:8000
 
-## Prerequisites
+## Design Philosophy
 
-- Node.js 18+
-- Backend API running on `http://localhost:8000`
+- **Clarity as a Feature**: Every element serves a purpose
+- **Professional Minimalism**: Clean, uncluttered, elegant design
+- **Data-driven Interface**: Focus on showcasing intelligent classification technology
+- **Sophisticated Teal Theme**: Professional color palette with teal accents
+- **Gallery-like Background**: Very light gray (#F9FAFB) for refined feel
 
 ## Getting Started
 
-1. **Install Dependencies**:
+1. **Install dependencies**:
 
    ```bash
    npm install
    ```
 
-2. **Start Development Server**:
+2. **Run the development server**:
 
    ```bash
    npm run dev
    ```
 
-3. **Open in Browser**:
-   ```
-   http://localhost:3000
-   ```
+3. **Open your browser** and navigate to [http://localhost:3000](http://localhost:3000)
 
-## Backend Integration
+## API Integration
 
-The frontend connects to the backend API for:
+The application integrates with three FastAPI endpoints:
 
-- `POST /api/classify` - Classify a log message
-- `POST /api/generate` - Generate synthetic logs
+- `POST /api/classify` - Main classification endpoint
+- `POST /api/generate-synthetic` - Generate synthetic logs
+- `POST /api/random-log` - Get random existing logs
 
-Make sure your backend is running on `http://localhost:8000` before using the live classification features.
+Make sure your FastAPI backend is running at `http://127.0.0.1:8000` for full functionality.
 
-## Usage
+## Project Structure
 
-### Guided Tour
+```
+src/
+├── app/
+│   ├── layout.js          # Global layout with Header/Footer
+│   ├── page.js            # Homepage with comprehensive sections
+│   ├── engine/
+│   │   └── page.js        # Dedicated classification engine
+│   └── dashboard/
+│       └── page.js        # Performance analytics dashboard
+├── components/
+│   ├── Header.jsx         # Navigation header
+│   ├── Footer.jsx         # Site footer
+│   └── ui/               # shadcn/ui components
+└── lib/
+    └── utils.js          # Utility functions
+```
 
-Click one of the three guided tour buttons to see examples designed for each stage:
+## Design Philosophy
 
-- **Simple Log (Regex)**: Demonstrates pattern matching
-- **Common Error (BERT)**: Shows deep learning classification
-- **Complex Failure (LLM)**: Exhibits AI semantic understanding
+**Clarity as a Feature** - Every element serves a purpose. The interface maintains professional minimalism while showcasing the intelligent classification technology through clean design and flawless user experience.
 
-### Random & Synthetic
+## Color Palette
 
-- **Get Random Existing Log**: Loads a sample from the dataset
-- **Generate New Log with AI**: Creates a new synthetic log using the backend
+- **Primary Accent**: Sophisticated teal for interactive elements
+- **Background**: Very light gray (#F9FAFB) for gallery-like feel
+- **Text & Borders**: Neutral palette of dark grays and black with varying opacities
 
-### Manual Input
+## Development
 
-Type any OpenStack log message and click "Classify Log!" to see the full pipeline in action.
+- **Linting**: ESLint with Next.js configuration
+- **Styling**: Tailwind CSS with custom color scheme
+- **Components**: Exclusively shadcn/ui for consistent design
+- **Icons**: Lucide React for professional iconography
 
-## Key Components
+## Deployment
 
-- `src/app/page.js` - Main application page
-- `src/components/PipelineJourney.jsx` - Pipeline visualization component
-- `src/components/ui/` - shadcn/ui components
+This Next.js application can be deployed to any platform that supports Node.js:
 
-## Build for Production
+- **Vercel** (recommended for Next.js)
+- **Netlify**
+- **Railway**
+- **AWS/GCP/Azure**
+
+Build the application for production:
 
 ```bash
 npm run build
 npm start
 ```
 
-## Features Showcase
+## License
 
-1. **Header Dashboard**: Key performance metrics prominently displayed
-2. **Interactive Hub**: Three input methods with beautiful UI
-3. **Results Visualization**: Pipeline journey with tooltips and status indicators
-4. **Educational Content**: Accordion explaining how each stage works
-5. **Responsive Design**: Optimized for all screen sizes
-
-The UI successfully demonstrates the project's value proposition as an intelligent, hybrid approach to log classification that combines speed, accuracy, and comprehensive coverage.
+This project showcases modern web development practices for intelligent infrastructure monitoring solutions.

@@ -1,32 +1,38 @@
-import { Inter } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import VantaBackground from "@/components/VantaBackground";
-import Script from "next/script";
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 export const metadata = {
-  title: "Infrnce - Intelligent Classification Engine",
+  title: "Infrnce - Intelligent Log Classification Engine",
   description:
-    "Advanced log classification system with hybrid pipeline architecture",
+    "An intelligent classification engine for infrastructure logs, featuring professional log analysis and categorization.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Script
-          src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"
-          strategy="beforeInteractive"
-        />
-        <main id="vanta-bg" className="relative min-h-screen">
-          <VantaBackground />
-          <div className="relative z-10">
-            <Header />
-            {children}
-          </div>
-        </main>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col relative`}
+      >
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(68,68,68,.02)_50%,transparent_75%,transparent)] bg-[length:250px_250px]"></div>
+
+        <div className="relative z-10 min-h-screen flex flex-col">
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );
