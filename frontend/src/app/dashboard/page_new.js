@@ -1,18 +1,21 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ArrowLeft, BarChart3, Clock, DollarSign, Cpu, Zap, Target } from "lucide-react";
+import {
+  ArrowLeft,
+  BarChart3,
+  Clock,
+  DollarSign,
+  Cpu,
+  Zap,
+  Target,
+} from "lucide-react";
 
 export default function Dashboard() {
   return (
@@ -61,8 +64,8 @@ export default function Dashboard() {
               </div>
               <p className="text-slate-600">
                 Our intelligent pipeline processes logs through three stages:
-                fast regex patterns, BERT model inference, and LLM fallback
-                for complex cases. This ensures optimal performance and cost
+                fast regex patterns, BERT model inference, and LLM fallback for
+                complex cases. This ensures optimal performance and cost
                 efficiency.
               </p>
             </CardContent>
@@ -86,7 +89,9 @@ export default function Dashboard() {
                     </span>
                   </div>
                   <div className="text-2xl font-bold text-teal-800">43ms</div>
-                  <div className="text-xs text-teal-600">15% faster than baseline</div>
+                  <div className="text-xs text-teal-600">
+                    15% faster than baseline
+                  </div>
                 </div>
 
                 <div className="bg-green-50/80 p-4 rounded-lg">
@@ -97,7 +102,9 @@ export default function Dashboard() {
                     </span>
                   </div>
                   <div className="text-2xl font-bold text-green-800">78%</div>
-                  <div className="text-xs text-green-600">vs LLM-only approach</div>
+                  <div className="text-xs text-green-600">
+                    vs LLM-only approach
+                  </div>
                 </div>
 
                 <div className="bg-blue-50/80 p-4 rounded-lg">
@@ -108,7 +115,9 @@ export default function Dashboard() {
                     </span>
                   </div>
                   <div className="text-2xl font-bold text-blue-800">94.2%</div>
-                  <div className="text-xs text-blue-600">F1-score across all categories</div>
+                  <div className="text-xs text-blue-600">
+                    F1-score across all categories
+                  </div>
                 </div>
 
                 <div className="bg-purple-50/80 p-4 rounded-lg">
@@ -141,7 +150,9 @@ export default function Dashboard() {
                   <div className="flex items-center gap-3">
                     <Zap className="h-5 w-5 text-teal-600" />
                     <div>
-                      <div className="font-semibold">Regex Engine (Stage 1)</div>
+                      <div className="font-semibold">
+                        Regex Engine (Stage 1)
+                      </div>
                       <div className="text-sm text-slate-500">
                         Fast pattern matching • 67% of logs processed
                       </div>
@@ -154,27 +165,33 @@ export default function Dashboard() {
                       <div className="text-sm font-medium text-slate-600">
                         Response Time
                       </div>
-                      <div className="text-lg font-bold text-slate-800">8ms</div>
+                      <div className="text-lg font-bold text-slate-800">
+                        8ms
+                      </div>
                     </div>
                     <div className="bg-slate-50 p-3 rounded">
                       <div className="text-sm font-medium text-slate-600">
                         Accuracy
                       </div>
-                      <div className="text-lg font-bold text-slate-800">98.5%</div>
+                      <div className="text-lg font-bold text-slate-800">
+                        98.5%
+                      </div>
                     </div>
                     <div className="bg-slate-50 p-3 rounded">
                       <div className="text-sm font-medium text-slate-600">
                         Cost per 1K logs
                       </div>
-                      <div className="text-lg font-bold text-slate-800">$0.001</div>
+                      <div className="text-lg font-bold text-slate-800">
+                        $0.001
+                      </div>
                     </div>
                   </div>
                   <p className="mt-4 text-slate-600">
                     Our regex engine handles straightforward log patterns with
-                    lightning speed. Using carefully crafted regular expressions,
-                    it can classify common log types instantly, providing the
-                    fastest and most cost-effective processing for the majority
-                    of logs.
+                    lightning speed. Using carefully crafted regular
+                    expressions, it can classify common log types instantly,
+                    providing the fastest and most cost-effective processing for
+                    the majority of logs.
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -197,19 +214,25 @@ export default function Dashboard() {
                       <div className="text-sm font-medium text-slate-600">
                         Response Time
                       </div>
-                      <div className="text-lg font-bold text-slate-800">45ms</div>
+                      <div className="text-lg font-bold text-slate-800">
+                        45ms
+                      </div>
                     </div>
                     <div className="bg-slate-50 p-3 rounded">
                       <div className="text-sm font-medium text-slate-600">
                         Accuracy
                       </div>
-                      <div className="text-lg font-bold text-slate-800">93.8%</div>
+                      <div className="text-lg font-bold text-slate-800">
+                        93.8%
+                      </div>
                     </div>
                     <div className="bg-slate-50 p-3 rounded">
                       <div className="text-sm font-medium text-slate-600">
                         Cost per 1K logs
                       </div>
-                      <div className="text-lg font-bold text-slate-800">$0.12</div>
+                      <div className="text-lg font-bold text-slate-800">
+                        $0.12
+                      </div>
                     </div>
                   </div>
                   <p className="mt-4 text-slate-600">
@@ -226,7 +249,9 @@ export default function Dashboard() {
                   <div className="flex items-center gap-3">
                     <Target className="h-5 w-5 text-teal-600" />
                     <div>
-                      <div className="font-semibold">LLM Fallback (Stage 3)</div>
+                      <div className="font-semibold">
+                        LLM Fallback (Stage 3)
+                      </div>
                       <div className="text-sm text-slate-500">
                         Advanced reasoning • 5% of logs processed
                       </div>
@@ -239,19 +264,25 @@ export default function Dashboard() {
                       <div className="text-sm font-medium text-slate-600">
                         Response Time
                       </div>
-                      <div className="text-lg font-bold text-slate-800">1.2s</div>
+                      <div className="text-lg font-bold text-slate-800">
+                        1.2s
+                      </div>
                     </div>
                     <div className="bg-slate-50 p-3 rounded">
                       <div className="text-sm font-medium text-slate-600">
                         Accuracy
                       </div>
-                      <div className="text-lg font-bold text-slate-800">96.7%</div>
+                      <div className="text-lg font-bold text-slate-800">
+                        96.7%
+                      </div>
                     </div>
                     <div className="bg-slate-50 p-3 rounded">
                       <div className="text-sm font-medium text-slate-600">
                         Cost per 1K logs
                       </div>
-                      <div className="text-lg font-bold text-slate-800">$2.40</div>
+                      <div className="text-lg font-bold text-slate-800">
+                        $2.40
+                      </div>
                     </div>
                   </div>
                   <p className="mt-4 text-slate-600">

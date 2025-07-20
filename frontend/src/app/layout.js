@@ -1,30 +1,32 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
+import VantaBackground from "@/components/VantaBackground";
+import Script from "next/script";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Infrnce - Intelligent Classification Engine",
-  description: "An Intelligent Classification Engine for Infrastructure Logs",
+  description:
+    "Advanced log classification system with hybrid pipeline architecture",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Header />
-        {children}
+      <body className={inter.className}>
+        <Script
+          src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"
+          strategy="beforeInteractive"
+        />
+        <main id="vanta-bg" className="relative min-h-screen">
+          <VantaBackground />
+          <div className="relative z-10">
+            <Header />
+            {children}
+          </div>
+        </main>
       </body>
     </html>
   );
