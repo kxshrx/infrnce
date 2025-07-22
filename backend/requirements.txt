@@ -1,20 +1,18 @@
 # Core FastAPI dependencies
-fastapi==0.115.14
-uvicorn[standard]==0.35.0
-python-dotenv==1.1.0
-pydantic==2.11.7
+fastapi
+uvicorn[standard]
+python-dotenv
+pydantic
 
-# Data processing
-pandas==2.3.0
-numpy==2.3.1
+# Data processing (still needed for other parts of your code)
+pandas
+numpy
 
-# --- Machine Learning / AI (CPU-Only Optimization) ---
-# This is the critical change to reduce memory usage.
-# We are installing the CPU-only version of torch, which is much smaller.
-torch==2.7.1 --index-url https://download.pytorch.org/whl/cpu
-
-transformers==4.52.4
+# HTTP client for API calls
+requests
 
 # LLM integration via LangChain
-langchain==0.3.26
-langchain-groq==0.3.2
+langchain
+langchain-groq
+
+gradio_client

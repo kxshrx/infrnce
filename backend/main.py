@@ -16,10 +16,7 @@ from typing import Dict, Any, List
 from classifier import LogClassifier
 
 # Configure logging - minimal and clean
-logging.basicConfig(
-    level=logging.WARNING,
-    format='%(levelname)s: %(message)s'
-)
+logging.basicConfig(level=logging.WARNING, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
 # Global classifier instance
