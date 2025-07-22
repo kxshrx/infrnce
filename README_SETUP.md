@@ -12,7 +12,7 @@ python main.py
 The backend will run on: `http://127.0.0.1:8000`
 
 ### 2. Start the Frontend (Next.js)
-
+ 
 ```bash
 cd frontend
 npm run dev
