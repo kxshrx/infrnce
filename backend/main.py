@@ -15,8 +15,11 @@ from typing import Dict, Any, List
 
 from classifier import LogClassifier
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
+# Configure logging - minimal and clean
+logging.basicConfig(
+    level=logging.WARNING,
+    format='%(levelname)s: %(message)s'
+)
 logger = logging.getLogger(__name__)
 
 # Global classifier instance
@@ -27,11 +30,9 @@ classifier = None
 async def lifespan(app: FastAPI):
     """Application lifespan manager for loading models at startup"""
     global classifier
-    logger.info("Starting up: Loading models and initializing classifier...")
     try:
         classifier = LogClassifier()
         await classifier.initialize()
-        logger.info("Classifier initialized successfully")
     except Exception as e:
         logger.error(f"Failed to initialize classifier: {e}")
         raise
@@ -39,7 +40,7 @@ async def lifespan(app: FastAPI):
     yield
 
     # Cleanup on shutdown
-    logger.info("Shutting down: Cleaning up resources...")
+    pass
 
 
 # Initialize FastAPI app with lifespan manager
@@ -152,9 +153,6 @@ async def classify_log(request: LogClassificationRequest):
             journey=result["journey"],
         )
 
-        logger.info(
-            f"Classified log in {processing_time_ms}ms via {result['stage']}: {result['category']}"
-        )
         return response
 
     except Exception as e:
@@ -182,8 +180,6 @@ async def generate_synthetic_log():
         # Generate synthetic log (no user input required)
         synthetic_log = await classifier.generate_log()
 
-        logger.info("Generated synthetic log with automatic topic selection")
-
         return LogGenerationResponse(synthetic_log=synthetic_log)
 
     except Exception as e:
@@ -194,4 +190,4 @@ async def generate_synthetic_log():
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True, log_level="info")
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True, log_level="warning")

@@ -85,8 +85,6 @@ class LogClassifier:
     async def initialize(self):
         """Initialize all models and components"""
         try:
-            logger.info("Initializing Log Classifier...")
-
             # Initialize components in parallel where possible
             await asyncio.gather(
                 self._load_regex_patterns(),
@@ -95,7 +93,6 @@ class LogClassifier:
             )
 
             self.is_initialized = True
-            logger.info("Log Classifier initialization complete")
 
         except Exception as e:
             logger.error(f"Failed to initialize classifier: {e}")
@@ -104,8 +101,6 @@ class LogClassifier:
     async def _load_regex_patterns(self):
         """Load regex patterns for Stage 3 classification"""
         try:
-            logger.info("Loading regex patterns...")
-
             # Define refined regex patterns based on the notebook analysis
             self.regex_patterns = {
                 "System_Operations": [
@@ -133,7 +128,6 @@ class LogClassifier:
             }
 
             self.regex_loaded = True
-            logger.info(f"Loaded {len(self.regex_patterns)} regex pattern categories")
 
         except Exception as e:
             logger.error(f"Failed to load regex patterns: {e}")
@@ -142,8 +136,6 @@ class LogClassifier:
     async def _load_bert_model(self):
         """Load BERT model and tokenizer for Stage 4 classification"""
         try:
-            logger.info("Loading BERT model...")
-
             # Model path - try relative path first, then absolute
             model_path = Path(
                 "../log_classification_system/models/controlled_bert_model.pth"
@@ -187,7 +179,6 @@ class LogClassifier:
             }
 
             self.bert_loaded = True
-            logger.info("BERT model loaded successfully")
 
         except Exception as e:
             logger.error(f"Failed to load BERT model: {e}")
@@ -196,8 +187,6 @@ class LogClassifier:
     async def _load_llm_client(self):
         """Load LLM client for Stage 5 classification"""
         try:
-            logger.info("Loading LLM client...")
-
             # Check for API key
             api_key = os.getenv("GROQ_API_KEY")
             if not api_key:
@@ -236,7 +225,6 @@ EXAMPLE RESPONSE: {{"category": "FileErr", "confidence": 0.8, "reasoning": "brie
             )
 
             self.llm_loaded = True
-            logger.info("LLM client loaded successfully")
 
         except Exception as e:
             logger.error(f"Failed to load LLM client: {e}")
@@ -510,7 +498,6 @@ Log:"""
             # Clean up the response (remove any extra formatting)
             synthetic_log = synthetic_log.replace("```", "").strip()
 
-            logger.info(f"Generated synthetic log for topic: {selected_topic}")
             return synthetic_log
 
         except Exception as e:
