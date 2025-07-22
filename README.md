@@ -85,7 +85,7 @@ To run the full application locally, you will need to start both the backend and
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/your-username/infrnce.git
+   git clone https://github.com/kxshrx/infrnce.git
    cd infrnce
    ```
 

@@ -244,7 +244,7 @@ export default function HomePage() {
               </Link>
 
               <Link
-                href="https://github.com/kxshrx/log-classification"
+                href="https://github.com/kxshrx/infrnce"
                 target="_blank"
                 rel="noopener noreferrer"
               >
