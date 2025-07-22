@@ -76,9 +76,10 @@ log_classification_system/models/
 # We ignore all .pth files by default to be safe...
 **/*.pth
 
-# ...but we create a specific exception for the one model file
-# required by the backend. This file MUST be tracked with Git LFS.
+# ...but we create specific exceptions for the model files
+# required by the backend. These files MUST be tracked with Git LFS.
 !backend/models/controlled_bert_model.pth
+!backend/models/model_quantized.pth
 
 ## --- Miscellaneous Project Files ---
 # Ignore generated file lists, large project notes, etc.
