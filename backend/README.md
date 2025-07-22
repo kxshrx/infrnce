@@ -3,6 +3,7 @@
 This directory contains the FastAPI backend for the Infrnce project. This API serves as the intelligent core, exposing the log classification pipeline and generation capabilities to the frontend client.
 
 ## Table of Contents
+
 - [Core Functionality](#core-functionality)
 - [API Endpoints](#api-endpoints)
 - [Technology Stack](#technology-stack)
@@ -24,18 +25,21 @@ This service provides three main functions:
 ## API Endpoints
 
 ### Classification
+
 - **`POST /api/classify`**
   - **Purpose:** Classifies a log message through the hybrid pipeline
   - **Request Body:** `{"log_message": "your log text here"}`
   - **Response:** Detailed classification result with processing journey, confidence scores, and timing metrics
 
-### Generation  
+### Generation
+
 - **`POST /api/generate`**
   - **Purpose:** Generates a synthetic OpenStack log message
   - **Request Body:** Empty `{}`
   - **Response:** `{"synthetic_log": "generated log text"}`
 
 ### Health Check
+
 - **`GET /health`**
   - **Purpose:** Returns detailed system health and component status
   - **Response:** Status of regex patterns, BERT model, and LLM client availability
@@ -44,7 +48,7 @@ This service provides three main functions:
 
 - **Framework:** FastAPI with async/await support
 - **Server:** Uvicorn ASGI server
-- **Core Libraries:** 
+- **Core Libraries:**
   - PyTorch & Transformers (BERT model)
   - Groq API (LLM integration)
   - Pandas (data processing)
@@ -55,11 +59,13 @@ This service provides three main functions:
 **Prerequisites:** Python 3.8+ and `pip`
 
 1. **Navigate to the backend directory:**
+
    ```bash
    cd backend
    ```
 
 2. **Create and activate virtual environment:**
+
    ```bash
    python -m venv ../logenv
    source ../logenv/bin/activate  # macOS/Linux
@@ -68,6 +74,7 @@ This service provides three main functions:
    ```
 
 3. **Install dependencies:**
+
    ```bash
    pip install -r requirements.txt
    ```
@@ -81,11 +88,13 @@ This service provides three main functions:
 ## Running the Server
 
 ### Development Mode
+
 ```bash
 python main.py
 ```
 
 ### Production Mode
+
 ```bash
 uvicorn main:app --host 0.0.0.0 --port 8000
 ```
@@ -114,7 +123,7 @@ LLM_TEMPERATURE=0.3
 The backend implements a sophisticated 3-stage classification pipeline:
 
 1. **Regex Engine:** Fast pattern matching for ~42% of common logs
-2. **BERT Model:** Deep learning classification for ~26% of medium complexity logs  
+2. **BERT Model:** Deep learning classification for ~26% of medium complexity logs
 3. **LLM Fallback:** Advanced semantic analysis for ~21% of rare/complex logs
 
 Each stage is optimized for different log characteristics, ensuring both high accuracy and cost efficiency.
@@ -122,19 +131,21 @@ Each stage is optimized for different log characteristics, ensuring both high ac
 ## Testing
 
 ### Manual Testing
+
 ```bash
 # Test classification endpoint
 curl -X POST "http://127.0.0.1:8000/api/classify" \
      -H "Content-Type: application/json" \
      -d '{"log_message": "ERROR nova.compute.manager timeout"}'
 
-# Test generation endpoint  
+# Test generation endpoint
 curl -X POST "http://127.0.0.1:8000/api/generate" \
      -H "Content-Type: application/json" \
      -d '{}'
 ```
 
 ### Health Check
+
 ```bash
 curl http://127.0.0.1:8000/health
 ```
@@ -149,6 +160,7 @@ curl http://127.0.0.1:8000/health
 ## Error Handling
 
 The API implements comprehensive error handling:
+
 - **503 Service Unavailable:** When models are not initialized
 - **400 Bad Request:** For invalid input data
 - **500 Internal Server Error:** For classification/generation failures

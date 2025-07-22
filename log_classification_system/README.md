@@ -7,6 +7,7 @@ This directory contains the original data science research, notebooks, and model
 The primary goal of this research was to develop a hybrid, multi-stage pipeline for efficiently classifying OpenStack infrastructure logs. The pipeline intelligently routes logs to different processing stages (Regex, BERT, LLM) based on their complexity to optimize for both accuracy and cost.
 
 ## Table of Contents
+
 - [Project Structure](#project-structure)
 - [Key Findings](#key-findings)
 - [Pipeline Stages](#pipeline-stages)
@@ -50,6 +51,7 @@ The research demonstrated the viability of a hybrid approach, achieving:
 - **Cost Efficiency:** 89% reduction in expensive LLM API calls through intelligent routing
 
 ### Performance by Stage
+
 - **Regex Engine:** Handles 42% of logs with 100% precision
 - **BERT Model:** Processes 26% of logs with 94.3% accuracy
 - **LLM Fallback:** Manages 21% of complex logs with 89% accuracy
@@ -57,28 +59,33 @@ The research demonstrated the viability of a hybrid approach, achieving:
 ## Pipeline Stages
 
 ### Stage 1: Data Preparation
+
 - **Purpose:** Clean and structure raw OpenStack logs
 - **Input:** 137,540 raw log entries from multiple OpenStack components
 - **Output:** Standardized CSV format with extracted features
 - **Key Operations:** Timestamp normalization, noise removal, strategic sampling
 
-### Stage 2: Data Clustering  
+### Stage 2: Data Clustering
+
 - **Purpose:** Group similar logs for targeted processing
 - **Method:** TF-IDF vectorization with K-means clustering
 - **Result:** Identification of common log patterns and rare edge cases
 
 ### Stage 3: Regex Classification
+
 - **Purpose:** Fast classification of common, structured log patterns
 - **Implementation:** Hand-crafted patterns for error types, service calls, and routine operations
 - **Coverage:** 42% of logs classified with deterministic accuracy
 
 ### Stage 4: BERT Classification
+
 - **Purpose:** Semantic classification of logs with sufficient training examples
 - **Model:** Fine-tuned DistilBERT on OpenStack log corpus
 - **Training:** 80/20 train/test split with confidence threshold filtering
 - **Performance:** 94.3% accuracy on test set
 
 ### Stage 5: LLM Classification
+
 - **Purpose:** Handle rare, complex, or novel log patterns
 - **Implementation:** Groq API with LLaMA 3.1 70B model
 - **Approach:** Few-shot learning with structured prompting
@@ -96,6 +103,7 @@ The research utilized authentic OpenStack infrastructure logs:
 ## Model Details
 
 ### BERT Model (`controlled_bert_model.pth`)
+
 - **Base Model:** DistilBERT (distilbert-base-uncased)
 - **Fine-tuning:** 11 OpenStack-specific log categories
 - **Training Data:** 15,000 manually labeled log samples
@@ -103,6 +111,7 @@ The research utilized authentic OpenStack infrastructure logs:
 - **Inference:** PyTorch with GPU acceleration support
 
 ### LLM Integration
+
 - **Provider:** Groq API for fast inference
 - **Model:** LLaMA 3.1 70B parameter model
 - **Prompt Engineering:** Structured few-shot examples with category definitions
@@ -111,18 +120,21 @@ The research utilized authentic OpenStack infrastructure logs:
 ## Research Notebooks
 
 ### Data Processing (`dataset_*.ipynb`)
+
 - **dataset_sampling.ipynb:** Strategic sampling for balanced training sets
 - **dataset_manage.ipynb:** Data quality assessment and cleaning
 - **dataset_refine.ipynb:** Feature extraction and preprocessing
 - **dataset_cluster.ipynb:** Clustering analysis and pattern identification
 
 ### Model Development
+
 - **bert.ipynb:** Initial BERT model experiments
 - **bert-v2.ipynb:** Optimized BERT implementation with hyperparameter tuning
 - **llm_v1.ipynb:** Initial LLM integration and prompt development
 - **llm_v2.ipynb:** Enhanced LLM implementation with error handling
 
 ### Integration & Analysis
+
 - **regex.ipynb:** Regex pattern development and testing
 - **integration.ipynb:** Full pipeline assembly and validation
 - **unified_results.ipynb:** Comprehensive performance analysis

@@ -3,6 +3,7 @@
 This directory contains the Next.js frontend for the Infrnce project. This application provides the user interface for interacting with the classification engine and viewing the performance dashboard.
 
 ## Table of Contents
+
 - [Features](#features)
 - [Technology Stack](#technology-stack)
 - [Setup and Installation](#setup-and-installation)
@@ -32,6 +33,7 @@ This directory contains the Next.js frontend for the Infrnce project. This appli
 **Prerequisites:** Node.js and `npm`
 
 1. **Navigate to the frontend directory:**
+
    ```bash
    cd frontend
    ```

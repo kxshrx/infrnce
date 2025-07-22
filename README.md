@@ -5,6 +5,7 @@ Infrnce is a full-stack application designed to demonstrate a professional, high
 This repository contains the complete project, including the backend API, the frontend client, and the foundational data science research.
 
 ## Table of Contents
+
 - [Project Overview](#project-overview)
 - [Core Components](#core-components)
 - [How It Works: The Hybrid Pipeline](#how-it-works-the-hybrid-pipeline)
@@ -18,6 +19,7 @@ This repository contains the complete project, including the backend API, the fr
 The Infrnce engine solves a common problem in infrastructure management: the overwhelming volume of log data. By automatically classifying logs, it helps engineering teams accelerate incident response, reduce manual triage time, and gain clear insights into system behavior.
 
 This project is presented as a professional-grade software product, complete with:
+
 - An interactive **Engine** for real-time classification with visual pipeline journey
 - A **Dashboard** showcasing performance metrics, cost analysis, and architectural details
 - A **REST API** providing programmatic access to classification capabilities
@@ -40,12 +42,13 @@ The project is structured into three main directories:
 The engine's core is a multi-stage pipeline designed for efficiency:
 
 1. **Regex Engine**: Instantly handles high-volume, simple logs with pattern matching (42% coverage)
-2. **BERT Model**: A fine-tuned transformer model provides accurate semantic analysis for common but complex logs (26% coverage)  
+2. **BERT Model**: A fine-tuned transformer model provides accurate semantic analysis for common but complex logs (26% coverage)
 3. **LLM Fallback**: A powerful Large Language Model handles rare, novel, or low-confidence logs, ensuring high coverage (21% coverage)
 
 This intelligent routing minimizes reliance on expensive LLM calls, making the system both powerful and cost-effective.
 
 ### Pipeline Benefits
+
 - **High Coverage**: 92.7% of logs successfully classified
 - **Fast Processing**: ~260 logs/second average throughput
 - **Cost Efficient**: 89% reduction in expensive API calls through smart routing
@@ -54,16 +57,19 @@ This intelligent routing minimizes reliance on expensive LLM calls, making the s
 ## Technology Stack
 
 ### Backend
+
 - **Python:** FastAPI, PyTorch, Transformers, LangChain
 - **Models:** Fine-tuned DistilBERT, LLaMA 3.1 via Groq API
 - **Data Processing:** Pandas, NumPy, Scikit-learn
 
-### Frontend  
+### Frontend
+
 - **JavaScript:** Next.js 15, React, shadcn/ui
 - **Styling:** Tailwind CSS with professional teal theme
 - **Icons:** Lucide React for consistent iconography
 
 ### Infrastructure
+
 - **Development:** Local development with hot reload
 - **Deployment:** Vercel (Frontend), Cloud hosting (Backend)
 - **API:** RESTful endpoints with comprehensive error handling
@@ -77,12 +83,14 @@ To run the full application locally, you will need to start both the backend and
 ### Quick Start
 
 1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/your-username/infrnce.git
    cd infrnce
    ```
 
 2. **Start the Backend Server:**
+
    ```bash
    cd backend
    python -m venv ../logenv
@@ -90,6 +98,7 @@ To run the full application locally, you will need to start both the backend and
    pip install -r requirements.txt
    python main.py
    ```
+
    The API will run on `http://127.0.0.1:8000`
 
 3. **Start the Frontend Server:**
@@ -105,6 +114,7 @@ Once both servers are running, you can access the Infrnce application in your br
 ### Detailed Setup
 
 For comprehensive setup instructions, refer to the individual component documentation:
+
 - [Backend Setup Guide](./backend/README.md#setup-and-installation)
 - [Frontend Setup Guide](./frontend/README.md#setup-and-installation)
 
@@ -117,6 +127,7 @@ For comprehensive setup instructions, refer to the individual component document
 - **Response Time:** 150ms average per classification
 
 ### Stage Performance
+
 - **Regex Engine:** 100% precision, handles 42% of logs
 - **BERT Model:** 94.3% accuracy, processes 26% of logs
 - **LLM Fallback:** 89% accuracy, manages 21% of complex logs
@@ -124,11 +135,13 @@ For comprehensive setup instructions, refer to the individual component document
 ## Documentation
 
 ### Component Documentation
+
 - [**Backend API Documentation**](./backend/README.md) - FastAPI service setup and endpoints
-- [**Frontend Application Documentation**](./frontend/README.md) - Next.js client setup and features  
+- [**Frontend Application Documentation**](./frontend/README.md) - Next.js client setup and features
 - [**Research & Models Documentation**](./log_classification_system/README.md) - Data science foundation
 
 ### Quick Reference
+
 - [**Setup Guide**](./README_SETUP.md) - Quick start instructions for development
 - **API Endpoints:**
   - `POST /api/classify` - Classify log messages
@@ -143,7 +156,7 @@ Infrnce/
 │   ├── main.py          # API server
 │   ├── classifier.py    # Pipeline logic
 │   └── requirements.txt
-├── frontend/            # Next.js client  
+├── frontend/            # Next.js client
 │   ├── src/app/         # Application pages
 │   ├── src/components/  # UI components
 │   └── package.json
