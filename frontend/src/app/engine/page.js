@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
@@ -17,9 +18,114 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../../components/ui/tooltip";
-import { Dice5, Sparkles } from "lucide-react";
+import {
+  ArrowLeftRight,
+  Wand2,
+  Sparkles,
+  CheckCircle2,
+  AlertTriangle,
+  XCircle,
+  Clock,
+} from "lucide-react";
 import Link from "next/link";
-import ClassificationJourney from "../../components/classification-journey";
+
+// New PipelineJourney component for the results display
+const PipelineJourney = ({ result }) => {
+  if (!result || !result.journey) return null;
+
+  const getStatusIcon = (status) => {
+    switch (status.toLowerCase()) {
+      case "classified":
+      case "matched":
+        return <CheckCircle2 className="h-4 w-4 text-teal-600" />;
+      case "low confidence":
+        return <AlertTriangle className="h-4 w-4 text-amber-600" />;
+      case "skipped":
+      case "not required":
+        return <XCircle className="h-4 w-4 text-gray-500" />;
+      default:
+        return <XCircle className="h-4 w-4 text-gray-500" />;
+    }
+  };
+
+  const getStatusColorClass = (status) => {
+    switch (status.toLowerCase()) {
+      case "classified":
+      case "matched":
+        return "text-teal-700 bg-teal-50 border-l-teal-300";
+      case "low confidence":
+        return "text-amber-700 bg-amber-50 border-l-amber-300";
+      case "skipped":
+      case "not required":
+        return "text-gray-600 bg-gray-50 border-l-gray-300";
+      default:
+        return "text-gray-600 bg-gray-50 border-l-gray-300";
+    }
+  };
+
+  return (
+    <div className="mt-6 space-y-4">
+      <div className="text-sm font-semibold text-foreground mb-4 flex items-center gap-2">
+        <Sparkles className="h-4 w-4 text-primary" />
+        Classification Pipeline Journey
+      </div>
+
+      <div className="space-y-3">
+        {result.journey.map((step, index) => (
+          <div
+            key={index}
+            className={`flex items-start gap-3 p-3 rounded-lg border-l-4 ${getStatusColorClass(
+              step.status
+            )}`}
+          >
+            <div className="flex-shrink-0 mt-0.5">
+              {getStatusIcon(step.status)}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-medium">{step.stage}</h4>
+                <span className="text-xs font-medium uppercase tracking-wide">
+                  {step.status}
+                </span>
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                {step.details}
+              </p>
+            </div>
+            {/* Connecting line for all but the last item */}
+            {index < result.journey.length - 1 && (
+              <div
+                className="absolute left-[25px] mt-8 w-px h-6 bg-border"
+                style={{ marginLeft: "13px" }}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Final Result Summary */}
+      <div className="mt-6 p-4 bg-primary/5 rounded-lg border border-primary/20">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-lg font-semibold text-primary">
+              Final Classification: {result.final_category}
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              Processed via {result.pipeline_stage} stage
+            </p>
+          </div>
+          <div className="text-right">
+            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+              <Clock className="h-3 w-3" />
+              {result.processing_time_ms}ms
+            </div>
+            <div className="text-xs text-muted-foreground">Response Time</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default function EnginePage() {
   const [logText, setLogText] = useState("");
@@ -163,81 +269,6 @@ export default function EnginePage() {
         </p>
       </div>
 
-      {/* Command Bar Card */}
-      <Card className="mb-8 border-primary/20">
-        <CardHeader>
-          <div className="flex items-center gap-3">
-            <div className="inline-flex items-center justify-center w-10 h-10 bg-primary/10 rounded-lg">
-              <Sparkles className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <CardTitle>Classification Engine</CardTitle>
-              <CardDescription>
-                Enter a log message or use the helper actions to get started
-              </CardDescription>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <TooltipProvider>
-            <div className="relative">
-              <Textarea
-                placeholder="Enter your log message here..."
-                value={logText}
-                onChange={(e) => setLogText(e.target.value)}
-                className="min-h-32 pr-20"
-              />
-              {/* Helper Action Icons */}
-              <div className="absolute top-3 right-3 flex space-x-2">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={handleGetRandomLog}
-                      className="h-8 w-8"
-                    >
-                      <Dice5 className="h-4 w-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Load a random log from the dataset</p>
-                  </TooltipContent>
-                </Tooltip>
-
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={handleGenerateSyntheticLog}
-                      className="h-8 w-8"
-                    >
-                      <Sparkles className="h-4 w-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Generate a synthetic log using AI</p>
-                  </TooltipContent>
-                </Tooltip>
-              </div>
-            </div>
-          </TooltipProvider>
-        </CardContent>
-      </Card>
-
-      {/* Primary Action */}
-      <div className="text-center mb-8">
-        <Button
-          onClick={handleClassifyLog}
-          disabled={isLoading || !logText.trim()}
-          className="px-12 py-4 text-lg h-14 bg-primary hover:bg-primary/90 font-semibold"
-          size="lg"
-        >
-          {isLoading ? "Classifying..." : "Run Classification"}
-        </Button>
-      </div>
-
       {/* Error Display */}
       {error && (
         <Alert
@@ -251,42 +282,108 @@ export default function EnginePage() {
         </Alert>
       )}
 
-      {/* Results Display */}
-      {classificationResult && (
-        <div className="space-y-6">
-          <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-primary/10">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <div className="inline-flex items-center justify-center w-10 h-10 bg-primary/20 rounded-lg">
-                  <Sparkles className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <CardTitle className="text-primary text-xl">
-                    {classificationResult.final_category}
-                  </CardTitle>
-                  <CardDescription>
-                    Classified by the {classificationResult.pipeline_stage} in{" "}
-                    {classificationResult.processing_time_ms}ms
-                  </CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="bg-background/50 rounded-lg p-4 backdrop-blur-sm">
-                <ClassificationJourney journey={classificationResult.journey} />
-              </div>
-            </CardContent>
-          </Card>
-
-          <div className="text-center">
-            <Button
-              variant="outline"
-              className="border-primary/20 hover:bg-primary/5"
-              asChild
-            >
-              <Link href="/dashboard">View Performance Dashboard</Link>
-            </Button>
+      {/* Unified Workflow Card */}
+      <Card className="border-primary/20 shadow-lg">
+        <CardHeader>
+          <div className="flex items-center gap-3">
+            <div className="inline-flex items-center justify-center w-10 h-10 bg-primary/10 rounded-lg">
+              <Sparkles className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <CardTitle>Classification Workflow</CardTitle>
+              <CardDescription>
+                Enter a log message or use the helper actions to get started
+              </CardDescription>
+            </div>
           </div>
+        </CardHeader>
+
+        <CardContent className="space-y-6">
+          {/* Command Bar with Textarea and Helper Actions */}
+          <TooltipProvider>
+            <div className="relative">
+              <Textarea
+                placeholder="Enter your log message here..."
+                value={logText}
+                onChange={(e) => setLogText(e.target.value)}
+                className="min-h-32 pr-20 resize-none"
+                disabled={isLoading}
+              />
+              {/* Helper Action Icons */}
+              <div className="absolute top-3 right-3 flex space-x-2">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={handleGetRandomLog}
+                      className="h-8 w-8"
+                      disabled={isLoading}
+                    >
+                      <ArrowLeftRight className="h-4 w-4" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Get Random Log from Dataset</p>
+                  </TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={handleGenerateSyntheticLog}
+                      className="h-8 w-8"
+                      disabled={isLoading}
+                    >
+                      <Wand2 className="h-4 w-4" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Generate a New Log with AI</p>
+                  </TooltipContent>
+                </Tooltip>
+              </div>
+            </div>
+          </TooltipProvider>
+
+          {/* Pipeline Journey Results Display */}
+          {classificationResult && (
+            <PipelineJourney result={classificationResult} />
+          )}
+        </CardContent>
+
+        {/* Integrated Action Button in Footer */}
+        <CardFooter>
+          <Button
+            onClick={handleClassifyLog}
+            disabled={isLoading || !logText.trim()}
+            className="w-full h-12 text-lg font-semibold bg-primary hover:bg-primary/90"
+            size="lg"
+          >
+            {isLoading ? (
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                Classifying...
+              </div>
+            ) : (
+              "Run Classification"
+            )}
+          </Button>
+        </CardFooter>
+      </Card>
+
+      {/* Navigation Link */}
+      {classificationResult && (
+        <div className="text-center mt-8">
+          <Button
+            variant="outline"
+            className="border-primary/20 hover:bg-primary/5"
+            asChild
+          >
+            <Link href="/dashboard">View Performance Dashboard</Link>
+          </Button>
         </div>
       )}
     </div>
