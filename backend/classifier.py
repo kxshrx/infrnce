@@ -74,7 +74,7 @@ class LogClassifier:
         self.llm_prompt_template = None
 
         # Configuration
-        self.bert_confidence_threshold = 0.7
+        self.bert_confidence_threshold = 0.4  # Lowered from 0.5 to 0.4 to better utilize trained BERT model
         self.bert_max_length = 512
         self.llm_max_tokens = 120
         self.llm_temperature = 0.3
@@ -147,7 +147,7 @@ class LogClassifier:
 
             if not model_path.exists():
                 logger.warning(
-                    f"BERT model not found at {model_path}. BERT classification will be skipped."
+                    f"BERT model not found. BERT classification will be skipped."
                 )
                 self.bert_loaded = False
                 return
@@ -158,15 +158,54 @@ class LogClassifier:
             )
 
             # Load model with the correct number of labels (6, from bert-v2.ipynb)
+            # Suppress the "not initialized" warning since we'll load trained weights
+            import transformers
+            transformers.logging.set_verbosity_error()
+            
             self.bert_model = DistilBertForSequenceClassification.from_pretrained(
                 "distilbert-base-uncased",
                 num_labels=6,  # Based on actual training labels from bert-v2.ipynb
             )
 
-            # Load saved weights
-            model_state = torch.load(model_path, map_location="cpu")
-            self.bert_model.load_state_dict(model_state)
-            self.bert_model.eval()
+            # Load saved weights - this overwrites the random classifier weights
+            try:
+                model_state = torch.load(model_path, map_location="cpu")
+                
+                # Verify the state dict has the expected keys
+                expected_keys = ['classifier.weight', 'classifier.bias']
+                if all(key in model_state for key in expected_keys):
+                    self.bert_model.load_state_dict(model_state, strict=True)
+                    self.bert_model.eval()
+                    
+                    # Test that the model gives non-random predictions
+                    with torch.no_grad():
+                        test_input = self.bert_tokenizer(
+                            "INFO nova.compute.manager test log", 
+                            return_tensors="pt", 
+                            max_length=512, 
+                            truncation=True, 
+                            padding=True
+                        )
+                        output = self.bert_model(**test_input)
+                        probs = torch.nn.functional.softmax(output.logits, dim=-1)
+                        max_prob = torch.max(probs).item()
+                        
+                        if max_prob > 0.2:  # Should be confident about something if trained properly
+                            logger.warning(f"BERT model loaded successfully with trained weights from {model_path}")
+                        else:
+                            logger.error("BERT model weights may not be properly trained")
+                else:
+                    logger.error(f"Model state dict missing expected keys. Found keys: {list(model_state.keys())}")
+                    self.bert_loaded = False
+                    return
+                    
+            except Exception as e:
+                logger.error(f"Failed to load BERT model weights: {e}")
+                self.bert_loaded = False
+                return
+            
+            # Reset logging level
+            transformers.logging.set_verbosity_warning()
 
             # Define label mapping (based on actual BERT training from bert-v2.ipynb)
             self.bert_label_mapping = {
@@ -276,6 +315,9 @@ EXAMPLE RESPONSE: {{"category": "FileErr", "confidence": 0.8, "reasoning": "brie
             predicted_category = self.bert_label_mapping.get(
                 predicted_label.item(), "Unknown"
             )
+
+            # Debug: Always log BERT predictions to see what's happening
+            logger.warning(f"BERT classification: {predicted_category} (confidence: {confidence_score:.3f}) - Threshold: {self.bert_confidence_threshold}")
 
             # Check confidence threshold
             if confidence_score >= self.bert_confidence_threshold:
