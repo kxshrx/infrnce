@@ -1,210 +1,156 @@
-# Log Classification API Backend
+# Infrnce Engine: Backend API
 
-Production-ready FastAPI backend for the Hybrid Intelligent Log Classification System.
+This directory contains the FastAPI backend for the Infrnce project. This API serves as the intelligent core, exposing the log classification pipeline and generation capabilities to the frontend client.
 
-## Features
+## Table of Contents
+- [Core Functionality](#core-functionality)
+- [API Endpoints](#api-endpoints)
+- [Technology Stack](#technology-stack)
+- [Setup and Installation](#setup-and-installation)
+- [Running the Server](#running-the-server)
+- [Environment Configuration](#environment-configuration)
+- [Testing](#testing)
 
-- **3-Stage Classification Pipeline**: Regex → BERT → LLM with confidence-based routing
-- **Synthetic Log Generation**: Generate realistic OpenStack logs from text prompts
-- **Production Ready**: Proper error handling, logging, and health checks
-- **CORS Support**: Ready for Next.js frontend integration
-- **Fast Performance**: Async processing with model loading optimization
+## Core Functionality
+
+This service provides three main functions:
+
+1. **Log Classification:** Routes a given log message through the hybrid pipeline (Regex → BERT → LLM) to determine its classification, returning detailed journey information about which stage processed the log.
+
+2. **Synthetic Log Generation:** Uses an LLM to generate new, realistic OpenStack log messages on demand.
+
+3. **Health Monitoring:** Provides comprehensive health checks for all pipeline components and model loading status.
 
 ## API Endpoints
 
+### Classification
+- **`POST /api/classify`**
+  - **Purpose:** Classifies a log message through the hybrid pipeline
+  - **Request Body:** `{"log_message": "your log text here"}`
+  - **Response:** Detailed classification result with processing journey, confidence scores, and timing metrics
+
+### Generation  
+- **`POST /api/generate`**
+  - **Purpose:** Generates a synthetic OpenStack log message
+  - **Request Body:** Empty `{}`
+  - **Response:** `{"synthetic_log": "generated log text"}`
+
 ### Health Check
+- **`GET /health`**
+  - **Purpose:** Returns detailed system health and component status
+  - **Response:** Status of regex patterns, BERT model, and LLM client availability
 
-- `GET /` - Basic health check
-- `GET /health` - Detailed health check with component status
+## Technology Stack
 
-### Log Classification
+- **Framework:** FastAPI with async/await support
+- **Server:** Uvicorn ASGI server
+- **Core Libraries:** 
+  - PyTorch & Transformers (BERT model)
+  - Groq API (LLM integration)
+  - Pandas (data processing)
+  - Pydantic (data validation)
 
-- `POST /api/classify` - Classify a log message
+## Setup and Installation
 
-**Request:**
+**Prerequisites:** Python 3.8+ and `pip`
 
-```json
-{
-  "log_message": "ERROR nova.compute.manager [req-1234-abcd] [instance: uuid] Service failed"
-}
-```
-
-**Response:**
-
-```json
-{
-  "log_analyzed": "ERROR nova.compute.manager [req-1234-abcd] [instance: uuid] Service failed",
-  "final_category": "Service_Communication_Errors",
-  "pipeline_stage": "LLM",
-  "final_confidence": 0.89,
-  "processing_time_ms": 150,
-  "journey": [
-    {
-      "stage": "Regex Engine",
-      "status": "Skipped",
-      "details": "No pattern matched."
-    },
-    {
-      "stage": "BERT Model",
-      "status": "Low Confidence",
-      "details": "Confidence was 0.65, below the 0.7 threshold."
-    },
-    {
-      "stage": "LLM Fallback",
-      "status": "Classified",
-      "details": "Classified into 1 of 11 enhanced categories."
-    }
-  ]
-}
-```
-
-### Synthetic Log Generation
-
-- `POST /api/generate` - Generate a synthetic log
-
-**Request:**
-
-```json
-{
-  "prompt": "A network service timed out during VM creation"
-}
-```
-
-**Response:**
-
-```json
-{
-  "synthetic_log": "ERROR nova.compute.manager [req-1234-abcd] [instance: uuid-5678] Network service timeout during instance boot"
-}
-```
-
-## Setup
-
-### Prerequisites
-
-- Python 3.8+
-- Virtual environment at `../logenv` (should already exist in your project)
-- BERT model file at `../log_classification_system/models/controlled_bert_model.pth`
-- Groq API key for LLM features
-
-### Installation
-
-1. **Navigate to backend directory:**
-
+1. **Navigate to the backend directory:**
    ```bash
    cd backend
    ```
 
-2. **Configure environment variables:**
+2. **Create and activate virtual environment:**
+   ```bash
+   python -m venv ../logenv
+   source ../logenv/bin/activate  # macOS/Linux
+   # or
+   # ..\logenv\Scripts\activate  # Windows
+   ```
 
+3. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Configure environment variables:**
    ```bash
    cp .env.example .env
-   # Edit .env and add your GROQ_API_KEY
+   # Edit .env file with your API keys
    ```
 
-3. **Start the server:**
+## Running the Server
 
-   ```bash
-   ./start.sh
-   ```
+### Development Mode
+```bash
+python main.py
+```
 
-   Or manually:
+### Production Mode
+```bash
+uvicorn main:app --host 0.0.0.0 --port 8000
+```
 
-   ```bash
-   source ../logenv/bin/activate
-   pip install -r requirements.txt
-   uvicorn main:app --host 0.0.0.0 --port 8000 --reload
-   ```
+The API will be available at `http://127.0.0.1:8000`
 
-4. **Access the API:**
-   - Server: http://localhost:8000
-   - Documentation: http://localhost:8000/docs
-   - Health Check: http://localhost:8000/health
+- **Interactive Documentation:** `http://127.0.0.1:8000/docs`
+- **Health Check:** `http://127.0.0.1:8000/health`
 
-## Architecture
+## Environment Configuration
 
-### Classification Pipeline
-
-1. **Regex Engine (Stage 3)**: Fast pattern matching for ~42% of common logs
-2. **BERT Model (Stage 4)**: DistilBERT-based classification for ~26% of medium complexity logs
-3. **LLM Fallback (Stage 5)**: LLaMA 3.1 via Groq for ~21% of rare/complex logs
-
-### Model Loading
-
-- All models are loaded at application startup using FastAPI's lifespan events
-- Graceful degradation: If BERT model or LLM API is unavailable, the pipeline continues with available components
-- Health check endpoint reports the status of each component
-
-### Performance
-
-- Async processing for concurrent requests
-- Model inference optimization with proper tensor handling
-- Confidence-based routing minimizes expensive LLM calls
-
-## Configuration
-
-Environment variables in `.env`:
+Create a `.env` file with the following variables:
 
 ```bash
-# Required for LLM features
+# Required for LLM functionality
 GROQ_API_KEY=your_groq_api_key_here
 
-# Optional overrides
+# Optional configuration
 BERT_CONFIDENCE_THRESHOLD=0.7
 LLM_MAX_TOKENS=120
 LLM_TEMPERATURE=0.3
 ```
 
-## Error Handling
+## Pipeline Architecture
 
-- Comprehensive error handling with appropriate HTTP status codes
-- Graceful degradation when models are unavailable
-- Detailed error messages and logging
-- Health checks for monitoring component status
+The backend implements a sophisticated 3-stage classification pipeline:
 
-## Development
+1. **Regex Engine:** Fast pattern matching for ~42% of common logs
+2. **BERT Model:** Deep learning classification for ~26% of medium complexity logs  
+3. **LLM Fallback:** Advanced semantic analysis for ~21% of rare/complex logs
 
-### Running in Development Mode
+Each stage is optimized for different log characteristics, ensuring both high accuracy and cost efficiency.
 
+## Testing
+
+### Manual Testing
 ```bash
-uvicorn main:app --reload --log-level debug
-```
-
-### Testing the API
-
-Use the interactive documentation at http://localhost:8000/docs or test with curl:
-
-```bash
-# Test classification
-curl -X POST "http://localhost:8000/api/classify" \
+# Test classification endpoint
+curl -X POST "http://127.0.0.1:8000/api/classify" \
      -H "Content-Type: application/json" \
      -d '{"log_message": "ERROR nova.compute.manager timeout"}'
 
-# Test generation
-curl -X POST "http://localhost:8000/api/generate" \
+# Test generation endpoint  
+curl -X POST "http://127.0.0.1:8000/api/generate" \
      -H "Content-Type: application/json" \
-     -d '{"prompt": "network connection failed"}'
+     -d '{}'
 ```
 
-## Deployment
+### Health Check
+```bash
+curl http://127.0.0.1:8000/health
+```
 
-For production deployment:
+## Performance Metrics
 
-1. Set `reload=False` in uvicorn configuration
-2. Use proper WSGI server (gunicorn + uvicorn workers)
-3. Configure proper logging and monitoring
-4. Set up environment-specific configuration
-5. Ensure model files are accessible in production environment
+- **Processing Speed:** ~260 logs/second
+- **Classification Coverage:** 92.7%
+- **Average Response Time:** 150ms per log
+- **Memory Usage:** 4.2GB peak (with BERT model loaded)
 
-## Troubleshooting
+## Error Handling
 
-### Common Issues
+The API implements comprehensive error handling:
+- **503 Service Unavailable:** When models are not initialized
+- **400 Bad Request:** For invalid input data
+- **500 Internal Server Error:** For classification/generation failures
 
-1. **BERT model not found**: Ensure `controlled_bert_model.pth` exists in the models directory
-2. **LLM not working**: Check GROQ_API_KEY in .env file
-3. **Import errors**: Ensure virtual environment is activated and dependencies are installed
-4. **Port conflicts**: Change port in startup command if 8000 is in use
-
-### Logs
-
-Check application logs for detailed error information. The API uses structured logging for better debugging.
+All errors include detailed messages for debugging and monitoring.
