@@ -133,11 +133,14 @@ export default function EnginePage() {
   const [classificationResult, setClassificationResult] = useState(null);
   const [error, setError] = useState(null);
 
+  // Read the API URL from environment variables, with a fallback for local development
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+
   const handleGetRandomLog = async () => {
     try {
       setError(null);
       // Since there's no random log endpoint, we'll generate a synthetic log instead
-      const response = await fetch("http://127.0.0.1:8000/api/generate", {
+      const response = await fetch(`${apiUrl}/api/generate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -168,7 +171,7 @@ export default function EnginePage() {
   const handleGenerateSyntheticLog = async () => {
     try {
       setError(null);
-      const response = await fetch("http://127.0.0.1:8000/api/generate", {
+      const response = await fetch(`${apiUrl}/api/generate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -208,7 +211,7 @@ export default function EnginePage() {
       setError(null);
       setClassificationResult(null);
 
-      const response = await fetch("http://127.0.0.1:8000/api/classify", {
+      const response = await fetch(`${apiUrl}/api/classify`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -250,7 +253,7 @@ export default function EnginePage() {
       };
       setClassificationResult(mockResponse);
       setError(
-        "Demo mode: Using mock classification result. Please ensure the API is running at http://127.0.0.1:8000 for live classification."
+        "Demo mode: Using mock classification result. Please ensure the API is running for live classification."
       );
     } finally {
       setIsLoading(false);

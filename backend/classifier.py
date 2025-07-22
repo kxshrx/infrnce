@@ -136,14 +136,8 @@ class LogClassifier:
     async def _load_bert_model(self):
         """Load BERT model and tokenizer for Stage 4 classification"""
         try:
-            # Model path - try relative path first, then absolute
-            model_path = Path(
-                "../log_classification_system/models/controlled_bert_model.pth"
-            )
-            if not model_path.exists():
-                model_path = Path(
-                    "/Users/kxshrx/dev/log-classification/log_classification_system/models/controlled_bert_model.pth"
-                )
+            # Model path - use self-contained path within backend directory
+            model_path = Path("./models/controlled_bert_model.pth")
 
             if not model_path.exists():
                 logger.warning(
