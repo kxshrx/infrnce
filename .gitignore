@@ -1,185 +1,86 @@
-<<<<<<< HEAD
-=======
-# LOG CLASSIFICATION PROJECT - GITIGNORE
-# 
-# This project processes large OpenStack log datasets and trains ML models.
-# To keep repository size manageable (<50MB), we exclude:
-# - Large log files (19MB+ each)
-# - Trained models (255MB+ each) 
-# - Result CSVs (38MB+ each)
-# - Binary embeddings (201MB+ each)
+# ================================================================= #
+# .gitignore for the Infrnce Project
 #
-# What we DO track:
-# - Source code (.py files)
-# - Jupyter notebooks (.ipynb)
-# - Small sample datasets (<1MB)
-# - Documentation and configuration
-# - Project structure and requirements
+# This file is structured to track essential source code while ignoring
+# secrets, large files, and generated artifacts.
+# ================================================================= #
 
->>>>>>> frontend
-# Python bytecode
+## --- Secrets & Environment Variables ---
+# Never commit secret keys or environment-specific files.
+.env
+.env.*
+.env.local
+
+## --- Python ---
+# Ignore bytecode, virtual environments, and build artifacts.
 __pycache__/
 *.py[cod]
 *.so
-<<<<<<< HEAD
-=======
 *.pyo
->>>>>>> frontend
-
-# Virtual environments
-env/
 venv/
+env/
+.venv/
 logenv/
-<<<<<<< HEAD
+.logenv/
+dist/
+build/
+*.egg-info/
 
-# PyCharm
-.idea/
-!.idea/modules.xml
-!.idea/vcs.xml
-!.idea/inspectionProfiles
+## --- Node.js (for the frontend) ---
+# Ignore dependencies and build output from the Next.js application.
+node_modules/
+.next/
+npm-debug.log*
+yarn-error.log*
 
-# Jupyter Notebook
+## --- Jupyter Notebooks ---
+# Ignore notebook checkpoints.
 .ipynb_checkpoints/
 
-dataset/
-results/
-
-# OS
+## --- OS & IDE ---
+# Ignore system-generated files and IDE-specific configurations.
 .DS_Store
 Thumbs.db
-
-
-models/controlled_bert_model.pth
-.env
-
-
-project_details.txt
-=======
-.venv/
-
-# IDE files
 .idea/
 .vscode/
-*.swp
-*.swo
-*~
 
-# Jupyter Notebook
-.ipynb_checkpoints/
-*.ipynb_checkpoints
+## --- Project-Specific Large Files & Artifacts ---
+# This section handles the large data, models, and results from the
+# original data science work to keep the repository small and fast.
 
-# Environment variables and secrets
-.env
-.env.local
-.env.*.local
-*.key
-*.pem
-config.json
+# Ignore all large data logs and datasets
+log_classification_system/data/
+!log_classification_system/data/dataset_sampling.csv
 
-# Large datasets and results (keep sample data only)
-log_classification_system/data/*.log
-log_classification_system/results/*.csv
-log_classification_system/results/*.txt
-log_classification_system/results/*.png
-log_classification_system/results/*.npy
+# Ignore all generated results, plots, reports, and embeddings
+log_classification_system/results/
 
-# Trained models (too large for git)
-log_classification_system/models/*.pth
-log_classification_system/models/*.pkl
-log_classification_system/models/*.joblib
-log_classification_system/models/*.bin
+# Ignore the original models directory entirely
+log_classification_system/models/
 
-# Large log files (any size, any location)
+# Ignore large files by extension
 *.log
-
-# Large CSV files and results (except small samples)
-**/results/*.csv
-**/data/*.csv
-# Allow small sample/demo datasets
-!**/data/dataset_sampling.csv
-!**/data/*_sample.csv
-!**/data/*_demo.csv
-
-# Large binary files
 *.npy
 *.npz
 *.h5
 *.hdf5
 
-# Model files anywhere in project
+# Ignore large CSV files (except small samples)
+**/results/*.csv
+**/data/*.csv
+!**/data/*sample*.csv
+!**/data/*demo*.csv
+
+## --- Model File Management (Git LFS) ---
+# This is the most critical rule for our deployment model.
+# We ignore all .pth files by default to be safe...
 **/*.pth
-**/*.pkl
-**/*.joblib
-**/*.bin
-**/*.model
-**/*.weights
 
-# Large image/plot files
-*.png
-*.jpg
-*.jpeg
-*.pdf
-# Allow small documentation images
-!docs/**/*.png
-!docs/**/*.jpg
+# ...but we create a specific exception for the one model file
+# required by the backend. This file MUST be tracked with Git LFS.
+!backend/models/controlled_bert_model.pth
 
-# Temporary files and outputs
-*.tmp
-*.temp
-temp/
-tmp/
-prod/
-
-# Large datasets and intermediate files
-**/embeddings/
-**/checkpoints/
-**/cache/
-**/.cache/
-
-# Jupyter notebook outputs and large files
-*.ipynb_checkpoints/
-**/outputs/
-**/logs/
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Backup and archive files
-*.bak
-*.backup
-*.old
-*.orig
-*.zip
-*.tar.gz
-*.rar
-*.7z
-
-# Project specific
+## --- Miscellaneous Project Files ---
+# Ignore generated file lists, large project notes, etc.
+all_file_paths.txt
 project_details.txt
-documentation_private.md
-
-# REPOSITORY SIZE MANAGEMENT
-# This project deals with large datasets, models, and result files
-# Only keep essential files for development and small samples for demos
-
-# Python package files
-dist/
-build/
-*.egg-info/
-
-# Coverage reports
-htmlcov/
-.coverage
-.coverage.*
-coverage.xml
-
-# Testing
-.pytest_cache/
-.tox/log_classification_system/models/*.pth
->>>>>>> frontend
