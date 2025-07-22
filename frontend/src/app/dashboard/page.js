@@ -40,7 +40,7 @@ export default function DashboardPage() {
           <h1 className="text-4xl lg:text-5xl font-bold text-foreground mb-4">
             Performance Dashboard
           </h1>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-6">
             Real-time analytics and comprehensive insights into the Infrnce
             classification engine performance
           </p>
@@ -438,6 +438,29 @@ export default function DashboardPage() {
             <div className="text-sm text-muted-foreground">Cost/1k logs</div>
           </Card>
         </div>
+
+        {/* Performance Disclaimer */}
+        <Card className="border-amber-200 bg-amber-50/50">
+          <CardContent className="p-6">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="h-5 w-5 text-amber-600 mt-0.5" />
+              <div>
+                <h3 className="font-semibold text-amber-900 mb-2">
+                  Performance Metrics Disclaimer
+                </h3>
+                <p className="text-sm text-amber-800 leading-relaxed">
+                  The performance metrics and cost analyses presented above are{" "}
+                  <strong>projected results</strong> based on small-scale
+                  testing and theoretical modeling. These figures have not been
+                  validated at enterprise scale and should be considered as
+                  preliminary estimates. Actual performance may vary
+                  significantly depending on log complexity, volume,
+                  infrastructure configuration, and deployment environment.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
