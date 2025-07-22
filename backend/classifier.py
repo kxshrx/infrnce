@@ -137,7 +137,8 @@ class LogClassifier:
         """Load BERT model and tokenizer for Stage 4 classification"""
         try:
             # Model path - use self-contained path within backend directory
-            model_path = Path("./models/controlled_bert_model.pth")
+            # model_path = Path("./models/controlled_bert_model.pth")
+            model_path = Path("./models/model_quantized.pth")
 
             if not model_path.exists():
                 logger.warning(
